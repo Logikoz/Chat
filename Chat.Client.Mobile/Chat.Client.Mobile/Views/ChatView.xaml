@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Chat.Client.Mobile.Views.ChatView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Visual="Material"
+    mc:Ignorable="d">
+    <ContentPage.Content>
+        <StackLayout>
+            <Entry
+                HorizontalOptions="Center"
+                Placeholder="Nome"
+                Text="{Binding UserName}"
+                WidthRequest="150" />
+            <Grid
+                HorizontalOptions="Center"
+                VerticalOptions="Start"
+                WidthRequest="300">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button
+                    Grid.Column="0"
+                    Command="{Binding ConnectionCommand}"
+                    Text="Conectar" />
+                <Button
+                    Grid.Column="1"
+                    Command="{Binding DesconnectionCommand}"
+                    Text="Desconectar" />
+            </Grid>
+            <ScrollView>
+                <StackLayout
+                    Margin="10"
+                    BindableLayout.ItemsSource="{Binding Messages}"
+                    VerticalOptions="FillAndExpand">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <BoxView
+                                    BackgroundColor="Green"
+                                    CornerRadius="10"
+                                    Opacity=".7" />
+                                <Grid Padding="20,7">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Label
+                                        Grid.Row="0"
+                                        FontAttributes="Bold"
+                                        FontSize="14"
+                                        Text="{Binding Name}"
+                                        TextColor="White" />
+                                    <Label
+                                        Grid.Row="1"
+                                        FontSize="16"
+                                        Text="{Binding Message}"
+                                        TextColor="White" />
+                                </Grid>
+                            </Grid>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
+            </ScrollView>
+            <Grid VerticalOptions="EndAndExpand">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Entry
+                    Grid.Column="0"
+                    Placeholder="Mensagem"
+                    Text="{Binding Message}" />
+                <Button
+                    Grid.Column="1"
+                    Command="{Binding SendMessageCommand}"
+                    Text="Enviar" />
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
