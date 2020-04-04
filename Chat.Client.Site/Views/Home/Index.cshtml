@@ -10,7 +10,7 @@
 
                 <input type="text" class="form-control mb-2" id="userName" placeholder="Name">
 
-                <button class="btn btn-info btn-block btn-green" type="button" onclick="join()">Participar</button>
+                <button class="btn btn-info btn-block btn-green" id="join-button" type="button" onclick="join()">Participar</button>
             </form>
         </div>
     </div>
@@ -18,19 +18,19 @@
     <br />
 
     <div class="row d-flex justify-content-center">
-        <ul class="list-group list-group-flush  invisible" id="chat"></ul>
+        <ul class="list-group list-group-flush invisible wrapper scrollbar custom-green" id="chat"></ul>
     </div>
 
     <br />
 
-    <div class="row justify-content-center invisible" id="sendMessage">
+    <div class="row justify-content-center invisible" id="message-area">
         <div class="col-md-6 text-center">
             <div class="input-group mb-4 z-depth-1">
 
                 <textarea class="form-control" rows="2" id="message" placeholder="Mensagem"></textarea>
 
                 <div class="input-group-append">
-                    <button class="btn btn-md m-0 px-3 py-2 z-depth-0 waves-effect btn-light" onclick="addMessage()" type="button">Enviar</button>
+                    <button class="btn btn-md m-0 px-3 py-2 z-depth-0 waves-effect btn-light" id="send-message-button" onclick="sendMessage()" type="button">Enviar</button>
                 </div>
             </div>
         </div>
@@ -38,15 +38,43 @@
 </section>
 
 <script>
-    function addMessage()
+    document.getElementById("userName").addEventListener("keyup", (e) => sendEventClick(e, 'join-button'));
+    document.getElementById("message").addEventListener("keyup", (e) => sendEventClick(e, 'send-message-button'));
+
+    function sendEventClick(e, elemment)
+    {
+        if (e.keyCode === 13)
+        {
+            e.preventDefault();
+            document.getElementById(elemment).click();
+        }
+    }
+
+    function sendMessage()
+    {
+        const message = getMessage();
+        if (message == "")
+        {
+            alert("Voce precisa digitar algo!");
+            return;
+        }
+        addMessage(getUserName(), message);
+        document.getElementById("message").value = null;
+    }
+
+    function addMessage(user, message)
     {
         const el = document.getElementById('chat');
         const node = document.createElement("li");
-        const message = "<strong>" + getUserName() + "</strong>: " + document.getElementById("message").value;
-        node.innerHTML = message;
+        node.innerHTML = "<strong>" + user + "</strong>: " + message;
         node.setAttribute("class", "list-group-item bg-transparent");
         node.setAttribute("style", "color: white;");
         el.appendChild(node);
+    }
+
+    function getMessage()
+    {
+        return document.getElementById("message").value;
     }
 
     function getUserName()
@@ -65,6 +93,6 @@
         setInterval("document.getElementById('chat').scrollTop = 1000000;", 500);
 
         document.getElementById("chat").classList.remove('invisible');
-        document.getElementById("sendMessage").classList.remove('invisible');
+        document.getElementById("message-area").classList.remove('invisible');
     }
 </script>

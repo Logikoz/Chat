@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
 
-using System;
 using System.Threading.Tasks;
 
 namespace Chat.Client.Site.Services
