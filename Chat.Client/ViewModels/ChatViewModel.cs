@@ -40,7 +40,7 @@ namespace Chat.Client.ViewModels
 
         private void Init()
         {
-            hubConnection = new HubConnectionBuilder().WithUrl("http://192.168.1.10:5000/ChatHub").Build();
+            hubConnection = new HubConnectionBuilder().WithUrl("http://logikoz.ddns.net:5000/ChatHub").Build();
 
             hubConnection.On<string, string>("ReceiveMessage", (user, message) => SendMessageChat($"{user}: {message}"));
 
@@ -63,6 +63,7 @@ namespace Chat.Client.ViewModels
         private async Task SendMessageAsync()
         {
             await hubConnection.InvokeAsync("SendMessage", UserName, Message);
+            Message = null;
         }
 
         private async Task DesconnectAsync()

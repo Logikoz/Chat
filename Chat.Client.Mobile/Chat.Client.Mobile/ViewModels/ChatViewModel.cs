@@ -40,7 +40,7 @@ namespace Chat.Client.Mobile.ViewModels
 
         private void Init()
         {
-            hubConnection = new HubConnectionBuilder().WithUrl("http://192.168.1.10:5000/ChatHub").Build();
+            hubConnection = new HubConnectionBuilder().WithUrl("http://logikoz.ddns.net:5000/ChatHub").Build();
 
             hubConnection.On<string, string>("ReceiveMessage", (user, message) => SendMessageChat(new MessageModel { Name = user, Message = message }));
 

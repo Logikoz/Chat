@@ -2,11 +2,11 @@
 
 using System.Windows;
 
-namespace Chat.Client
+namespace Chat.Client.Views
 {
-    public partial class MainWindow : Window
+    public partial class ChatView : Window
     {
-        public MainWindow()
+        public ChatView()
         {
             InitializeComponent();
             DataContext = new ChatViewModel(Chat);
