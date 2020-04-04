@@ -1,45 +1,70 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Chat";
 }
 
-<section class="px-md-5 my-5 mx-md-5 text-center text-lg-left dark-grey-text">
+<section class="px-md-5 my-5 mx-md-5 text-lg-left dark-grey-text">
     <div class="row d-flex justify-content-center">
         <div class="col-md-6">
             <form class="text-center">
-
                 <p class="h4 mb-4 " style="color: white;">SignalR Chat</p>
 
-                <input type="text" class="form-control mb-2" placeholder="Name">
+                <input type="text" class="form-control mb-2" id="userName" placeholder="Name">
 
-                <button class="btn btn-info btn-block btn-green" type="submit">Participar</button>
+                <button class="btn btn-info btn-block btn-green" type="button" onclick="join()">Participar</button>
             </form>
         </div>
     </div>
 
     <br />
-    <br />
 
-    <ul class="list-group list-group-flush flex-center">
-        <li class="list-group-item bg-transparent" style="color: white;">Logikoz: oi</li>
-        <li class="list-group-item bg-transparent" style="color: white;">Marco: sou corno</li>
-        <li class="list-group-item bg-transparent" style="color: white;">Logikoz: eu sei</li>
-        <li class="list-group-item bg-transparent" style="color: white;">Marco: 🐮</li>
-        <li class="list-group-item bg-transparent" style="color: white;">Logikoz: Kasd magna elitr no rebum sit suscipit ipsum dolore tincidunt</li>
-    </ul>
+    <div class="row d-flex justify-content-center">
+        <ul class="list-group list-group-flush  invisible" id="chat"></ul>
+    </div>
 
     <br />
-    <br />
 
-    <div class="row justify-content-center">
+    <div class="row justify-content-center invisible" id="sendMessage">
         <div class="col-md-6 text-center">
             <div class="input-group mb-4 z-depth-1">
 
-                <textarea class="form-control" rows="2" placeholder="Mensagem"></textarea>
+                <textarea class="form-control" rows="2" id="message" placeholder="Mensagem"></textarea>
 
                 <div class="input-group-append">
-                    <button class="btn btn-md m-0 px-3 py-2 z-depth-0 waves-effect btn-light" type="submit">Enviar</button>
+                    <button class="btn btn-md m-0 px-3 py-2 z-depth-0 waves-effect btn-light" onclick="addMessage()" type="button">Enviar</button>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<script>
+    function addMessage()
+    {
+        const el = document.getElementById('chat');
+        const node = document.createElement("li");
+        const message = "<strong>" + getUserName() + "</strong>: " + document.getElementById("message").value;
+        node.innerHTML = message;
+        node.setAttribute("class", "list-group-item bg-transparent");
+        node.setAttribute("style", "color: white;");
+        el.appendChild(node);
+    }
+
+    function getUserName()
+    {
+        return document.getElementById("userName").value;
+    }
+
+    function join()
+    {
+        if (getUserName() == "")
+        {
+            alert("Voce precisa informar o nome!");
+            return;
+        }
+
+        setInterval("document.getElementById('chat').scrollTop = 1000000;", 500);
+
+        document.getElementById("chat").classList.remove('invisible');
+        document.getElementById("sendMessage").classList.remove('invisible');
+    }
+</script>

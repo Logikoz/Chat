@@ -13,9 +13,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Client.Mobile.iOS", "C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chat.Client.Mobile", "Chat.Client.Mobile\Chat.Client.Mobile\Chat.Client.Mobile.csproj", "{8C7E4A10-598C-4BE4-8A6B-A2A334E05B7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Client.Site", "Chat.Client.Site\Chat.Client.Site.csproj", "{3C2B5F2C-7FCF-465F-B862-E36EA3057438}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chat.Client.Site", "Chat.Client.Site\Chat.Client.Site.csproj", "{3C2B5F2C-7FCF-465F-B862-E36EA3057438}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Compiler", "Compiler", "{AB1C4D08-EC1E-4616-98F5-9A435E2CF87F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chat.Dependencies", "Chat.Dependencies\Chat.Dependencies.csproj", "{DBC9B39F-25B3-4F28-A010-F4FB09D15FBA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -103,6 +105,18 @@ Global
 		{3C2B5F2C-7FCF-465F-B862-E36EA3057438}.Release|iPhone.Build.0 = Release|Any CPU
 		{3C2B5F2C-7FCF-465F-B862-E36EA3057438}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{3C2B5F2C-7FCF-465F-B862-E36EA3057438}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{DBC9B39F-25B3-4F28-A010-F4FB09D15FBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBC9B39F-25B3-4F28-A010-F4FB09D15FBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBC9B39F-25B3-4F28-A010-F4FB09D15FBA}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{DBC9B39F-25B3-4F28-A010-F4FB09D15FBA}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{DBC9B39F-25B3-4F28-A010-F4FB09D15FBA}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{DBC9B39F-25B3-4F28-A010-F4FB09D15FBA}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{DBC9B39F-25B3-4F28-A010-F4FB09D15FBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBC9B39F-25B3-4F28-A010-F4FB09D15FBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBC9B39F-25B3-4F28-A010-F4FB09D15FBA}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{DBC9B39F-25B3-4F28-A010-F4FB09D15FBA}.Release|iPhone.Build.0 = Release|Any CPU
+		{DBC9B39F-25B3-4F28-A010-F4FB09D15FBA}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{DBC9B39F-25B3-4F28-A010-F4FB09D15FBA}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Chat.Client.Mobile.Models
+﻿namespace Chat.Dependencies.Models
 {
     public class MessageModel
     {

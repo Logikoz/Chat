@@ -12,7 +12,7 @@
             <Entry
                 HorizontalOptions="Center"
                 Placeholder="Nome"
-                Text="{Binding UserName}"
+                Text="{Binding User.Name}"
                 WidthRequest="150" />
             <Grid
                 HorizontalOptions="Center"
@@ -73,7 +73,7 @@
                 <Entry
                     Grid.Column="0"
                     Placeholder="Mensagem"
-                    Text="{Binding Message}" />
+                    Text="{Binding User.Message}" />
                 <Button
                     Grid.Column="1"
                     Command="{Binding SendMessageCommand}"

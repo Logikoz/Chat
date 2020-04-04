@@ -1,4 +1,4 @@
-﻿using Chat.Client.Mobile.Models;
+﻿using Chat.Dependencies.Models;
 
 using Microsoft.AspNetCore.SignalR.Client;
 
@@ -15,19 +15,12 @@ namespace Chat.Client.Mobile.ViewModels
     {
         private HubConnection hubConnection;
 
-        private string _userName;
-        private string _message;
+        private MessageModel _user;
 
-        public string UserName
+        public MessageModel User
         {
-            get => _userName;
-            set => SetProperty(ref _userName, value);
-        }
-
-        public string Message
-        {
-            get => _message;
-            set => SetProperty(ref _message, value);
+            get => _user;
+            set => SetProperty(ref _user, value);
         }
 
         public ObservableCollection<MessageModel> Messages { get; private set; } = new ObservableCollection<MessageModel>();
@@ -40,6 +33,8 @@ namespace Chat.Client.Mobile.ViewModels
 
         private void Init()
         {
+            User = new MessageModel();
+
             hubConnection = new HubConnectionBuilder().WithUrl("http://logikoz.ddns.net:5000/ChatHub").Build();
 
             hubConnection.On<string, string>("ReceiveMessage", (user, message) => SendMessageChat(new MessageModel { Name = user, Message = message }));
@@ -59,19 +54,19 @@ namespace Chat.Client.Mobile.ViewModels
         private async Task ConnectionAsync()
         {
             await hubConnection.StartAsync();
-            await hubConnection.InvokeAsync("JoinChat", UserName);
+            await hubConnection.InvokeAsync("JoinChat", User.Name);
         }
 
         private async Task DesconnectionAsync()
         {
-            await hubConnection.InvokeAsync("LeaveChat", UserName);
+            await hubConnection.InvokeAsync("LeaveChat", User.Name);
             await hubConnection.StopAsync();
         }
 
         private async Task SendMessageAsync()
         {
-            await hubConnection.InvokeAsync("SendMessage", UserName, Message);
-            Message = null;
+            await hubConnection.InvokeAsync("SendMessage", User.Name, User.Message);
+            User.Message = null;
         }
     }
 }
