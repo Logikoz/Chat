@@ -71,6 +71,7 @@ namespace Chat.Client.Mobile.ViewModels
         private async Task SendMessageAsync()
         {
             await hubConnection.InvokeAsync("SendMessage", UserName, Message);
+            Message = null;
         }
     }
 }
