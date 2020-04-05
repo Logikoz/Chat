@@ -8,7 +8,7 @@
             <form class="text-center">
                 <p class="h4 mb-4 " style="color: white;">SignalR Chat</p>
 
-                <input type="text" class="form-control mb-2" id="userName" placeholder="Name">
+                <textarea rows="1" class="form-control mb-2" id="user-name" placeholder="Nome"></textarea>
 
                 <button class="btn btn-info btn-block btn-green" id="join-button" type="button" onclick="join()">Participar</button>
             </form>
@@ -38,7 +38,7 @@
 </section>
 
 <script>
-    document.getElementById("userName").addEventListener("keyup", (e) => sendEventClick(e, 'join-button'));
+    document.getElementById("user-name").addEventListener("keyup", (e) => sendEventClick(e, 'join-button'));
     document.getElementById("message").addEventListener("keyup", (e) => sendEventClick(e, 'send-message-button'));
 
     function sendEventClick(e, elemment)
@@ -46,7 +46,7 @@
         if (e.keyCode === 13)
         {
             e.preventDefault();
-            document.getElementById(elemment).click();
+            document.getElementById(elemment).onclick();
         }
     }
 
@@ -79,7 +79,7 @@
 
     function getUserName()
     {
-        return document.getElementById("userName").value;
+        return document.getElementById("user-name").value;
     }
 
     function join()
@@ -94,5 +94,6 @@
 
         document.getElementById("chat").classList.remove('invisible');
         document.getElementById("message-area").classList.remove('invisible');
+        document.getElementById("user-name").value = null;
     }
 </script>
