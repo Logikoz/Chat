@@ -1,0 +1,56 @@
+﻿@page "/"
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@namespace Chat.Client.Web
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat</title>
+    <base href="~/" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/mdb.min.css" />
+    <link rel="stylesheet" href="css/site.css" />
+</head>
+<body style="background: #1C1C1C;">
+    <div id="components-reconnect-modal" class="my-reconnect-modal components-reconnect-hide">
+        <div class="show">
+            <p>
+                Tentando se conectar com o servidor, verifique sua conexao!
+            </p>
+        </div>
+        <div class="failed">
+            <p>
+                A conexao com o servidor falhou.
+            </p>
+        </div>
+        <div class="refused">
+            <p>
+                A conexao com o servidor foi recusada!
+            </p>
+        </div>
+    </div>
+
+    <app>
+        <component type="typeof(App)" render-mode="ServerPrerendered" />
+    </app>
+
+    <div id="blazor-error-ui">
+        <environment include="Staging,Production">
+            An error has occurred. This application may no longer respond until reloaded.
+        </environment>
+        <environment include="Development">
+            An unhandled exception has occurred. See browser dev tools for details.
+        </environment>
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+
+    <script src="_framework/blazor.server.js"></script>
+    <script src="~/js/jquery-3.4.1.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/mdb.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+﻿@page "/"
+
+@using Chat.Client.Web.Views.Components
+
+<section class="px-md-5 my-5 mx-md-5 text-lg-left dark-grey-text">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6">
+            <form class="text-center">
+                <p class="h4 mb-4 " style="color: white;">SignalR Chat</p>
+                <p>@userName</p>
+                <textarea rows="1" @bind="@userName" @onkeydown="@((e) => KeyPress(e, () => JoinButton()))" class="form-control mb-2" placeholder="Nome"></textarea>
+
+                <button class="btn btn-info btn-block btn-green" type="button" @onclick="JoinButton">Participar</button>
+            </form>
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row d-flex justify-content-center">
+        <ul class="list-group list-group-flush wrapper scrollbar custom-green">
+            <ChatMessage Author="Logikoz" Message="Ola mundo"/>
+            <ChatMessage Author="Logikoz" Message="Ola mundo"/>
+            <ChatMessage Author="Logikoz" Message="Ola mundo"/>
+            <ChatMessage Author="Logikoz" Message="Ola mundo"/>
+        </ul>
+    </div>
+
+    <br />
+
+    <div class="row justify-content-center" id="message-area">
+        <div class="col-md-6 text-center">
+            <div class="input-group mb-4 z-depth-1">
+                <textarea @bind="@message" @onkeydown="@((e) => KeyPress(e, () => SendMessage()))" class="form-control" rows="2" placeholder="Mensagem"></textarea>
+
+                <div class="input-group-append">
+                    <button class="btn btn-md m-0 px-3 py-2 z-depth-0 waves-effect btn-light" @*@onclick="@(() => AddMessage(userName, message))"*@ type="button">Enviar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@functions{
+    RenderFragment dynamicComponent(string user, string msg) => builder =>
+    {
+        builder.OpenComponent(0, typeof(ChatMessage));
+        builder.AddAttribute(1, "Author", user);
+        builder.AddAttribute(2, "Message", msg);
+        builder.CloseComponent();
+    };
+}
+
+@code{
+    private string userName = "";
+    private string message = "";
+
+    private void JoinButton()
+    {
+
+    }
+
+    private void SendMessage()
+    {
+
+    }
+
+    private void KeyPress(KeyboardEventArgs e, Action action)
+    {
+        if (e.Key == "Enter")
+            action.Invoke();
+    }
+}
+
+@*<script>
+        document.getElementById("user-name").addEventListener("keyup", (e) => sendEventClick(e, 'join-button'));
+        document.getElementById("message").addEventListener("keyup", (e) => sendEventClick(e, 'send-message-button'));
+
+        function sendEventClick(e, elemment)
+        {
+            if (e.keyCode === 13)
+            {
+                e.preventDefault();
+                document.getElementById(elemment).onclick();
+            }
+        }
+
+        function sendMessage()
+        {
+            const message = getMessage();
+            if (message == "")
+            {
+                alert("Voce precisa digitar algo!");
+                return;
+            }
+            addMessage(getUserName(), message);
+            document.getElementById("message").value = null;
+        }
+
+        function addMessage(user, message)
+        {
+            const el = document.getElementById('chat');
+            const node = document.createElement("li");
+            node.innerHTML = "<strong>" + user + "</strong>: " + message;
+            node.setAttribute("class", "list-group-item bg-transparent");
+            node.setAttribute("style", "color: white;");
+            el.appendChild(node);
+        }
+
+        function getMessage()
+        {
+            return document.getElementById("message").value;
+        }
+
+        function getUserName()
+        {
+            return document.getElementById("user-name").value;
+        }
+
+        function join()
+        {
+            if (getUserName() == "")
+            {
+                alert("Voce precisa informar o nome!");
+                return;
+            }
+
+            setInterval("document.getElementById('chat').scrollTop = 1000000;", 500);
+
+            document.getElementById("chat").classList.remove('invisible');
+            document.getElementById("message-area").classList.remove('invisible');
+            document.getElementById("user-name").value = null;
+        }
+    </script>*@
