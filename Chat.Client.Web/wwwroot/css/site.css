@@ -1,5 +1,12 @@
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
+#chat {
+    padding: 0;
+    height: 20em;
+    width: 30em;
+    overflow-y: auto;
+}
+
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
@@ -222,4 +229,29 @@ app {
 
 .components-reconnect-refused > .refused {
     display: block;
+}
+
+.scrollbar {
+    margin-left: 30px;
+    float: left;
+    height: 300px;
+    width: 65px;
+    margin-bottom: 25px;
+}
+
+.wrapper {
+    text-align: center;
+    width: 500px;
+    margin: auto;
+}
+
+.custom-green::-webkit-scrollbar {
+    width: 10px;
+    background-color: transparent;
+}
+
+.custom-green::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: transparent;
+    background-image: -webkit-gradient(linear, 40% 0%, 75% 84%, from(#4D9C41), to(#19911D), color-stop(.6,#54DE5D))
 }

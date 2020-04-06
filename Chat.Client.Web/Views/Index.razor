@@ -1,14 +1,15 @@
 ﻿@page "/"
 
 @using Chat.Client.Web.Views.Components
+@using Chat.Client.Web.Utils
 
 <section class="px-md-5 my-5 mx-md-5 text-lg-left dark-grey-text">
     <div class="row d-flex justify-content-center">
         <div class="col-md-6">
             <form class="text-center">
                 <p class="h4 mb-4 " style="color: white;">SignalR Chat</p>
-                <p>@userName</p>
-                <textarea rows="1" @bind="@userName" @onkeydown="@((e) => KeyPress(e, () => JoinButton()))" class="form-control mb-2" placeholder="Nome"></textarea>
+
+                <textarea rows="1" @bind="@userName" class="form-control mb-2" placeholder="Nome"></textarea>
 
                 <button class="btn btn-info btn-block btn-green" type="button" @onclick="JoinButton">Participar</button>
             </form>
@@ -17,12 +18,12 @@
 
     <br />
 
-    <div class="row d-flex justify-content-center">
-        <ul class="list-group list-group-flush wrapper scrollbar custom-green">
-            <ChatMessage Author="Logikoz" Message="Ola mundo"/>
-            <ChatMessage Author="Logikoz" Message="Ola mundo"/>
-            <ChatMessage Author="Logikoz" Message="Ola mundo"/>
-            <ChatMessage Author="Logikoz" Message="Ola mundo"/>
+    <div class="row d-flex justify-content-lg-start">
+        <ul class="list-group list-group-flush wrapper scrollbar custom-green" id="chat">
+            @foreach (var message in messages)
+            {
+                <ChatMessage Author="@authors[messages.IndexOf(message)]" Message="@message" />
+            }
         </ul>
     </div>
 
@@ -31,27 +32,20 @@
     <div class="row justify-content-center" id="message-area">
         <div class="col-md-6 text-center">
             <div class="input-group mb-4 z-depth-1">
-                <textarea @bind="@message" @onkeydown="@((e) => KeyPress(e, () => SendMessage()))" class="form-control" rows="2" placeholder="Mensagem"></textarea>
+                <textarea @bind="@message" @bind:event="oninput" @onkeydown="@((e) => KeyPress(e, () => SendMessage()))" class="form-control" rows="2" placeholder="Mensagem"></textarea>
 
                 <div class="input-group-append">
-                    <button class="btn btn-md m-0 px-3 py-2 z-depth-0 waves-effect btn-light" @*@onclick="@(() => AddMessage(userName, message))"*@ type="button">Enviar</button>
+                    <button class="btn btn-md m-0 px-3 py-2 z-depth-0 waves-effect btn-light" @onclick="@(() => AddMessage(userName, message))" type="button">Enviar</button>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-@functions{
-    RenderFragment dynamicComponent(string user, string msg) => builder =>
-    {
-        builder.OpenComponent(0, typeof(ChatMessage));
-        builder.AddAttribute(1, "Author", user);
-        builder.AddAttribute(2, "Message", msg);
-        builder.CloseComponent();
-    };
-}
-
 @code{
+    private List<string> authors = new List<string>();
+    private List<string> messages = new List<string>();
+
     private string userName = "";
     private string message = "";
 
@@ -62,7 +56,20 @@
 
     private void SendMessage()
     {
+        AddMessage(userName, message);
+        message = string.Empty;
+    }
 
+    private void AddMessage(string u, string m)
+    {
+        if (authors.Count >= 5)
+        {
+            authors.RemoveAt(0);
+            messages.RemoveAt(0);
+        }
+
+        authors.Add(u);
+        messages.Add(m);
     }
 
     private void KeyPress(KeyboardEventArgs e, Action action)
