@@ -1,7 +1,6 @@
 ﻿@page "/"
 
 @using Chat.Client.Web.Views.Components
-@using Chat.Client.Web.Utils
 
 <section class="px-md-5 my-5 mx-md-5 text-lg-left dark-grey-text">
     <div class="row d-flex justify-content-center">
@@ -62,11 +61,11 @@
 
     private void AddMessage(string u, string m)
     {
-        if (authors.Count >= 5)
-        {
-            authors.RemoveAt(0);
-            messages.RemoveAt(0);
-        }
+        //if (authors.Count >= 5)
+        //{
+        //    authors.RemoveAt(0);
+        //    messages.RemoveAt(0);
+        //}
 
         authors.Add(u);
         messages.Add(m);
