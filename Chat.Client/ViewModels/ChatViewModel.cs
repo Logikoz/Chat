@@ -1,52 +1,55 @@
-﻿using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
+﻿using Chat.Dependencies;
 
 using Microsoft.AspNetCore.SignalR.Client;
 
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Chat.Client.ViewModels
 {
 	internal class ChatViewModel : ViewModelBase
 	{
-		private HubConnection hubConnection;
-		private string _message;
-		private string _userName;
+		private readonly HubConnection _hubConnection;
+
 		private readonly RichTextBox _chat;
+
+		private string __message;
+		private string __userName;
 
 		public string Message
 		{
-			get => _message;
-			set => Set(ref _message, value);
+			get => __message;
+			set => Set(ref __message, value);
 		}
 
 		public string UserName
 		{
-			get => _userName;
-			set => Set(ref _userName, value);
+			get => __userName;
+			set => Set(ref __userName, value);
 		}
 
-		public RelayCommand ConnectCommand { get; set; }
-		public RelayCommand DesconnectCommand { get; set; }
-		public RelayCommand SendMessageCommand { get; set; }
+		public ICommand ConnectCommand { get; set; }
+		public ICommand DesconnectCommand { get; set; }
+		public ICommand SendMessageCommand { get; set; }
 
 		public ChatViewModel(RichTextBox chat)
 		{
-			Init();
+			_hubConnection = new HubConnectionBuilder().WithUrl("http://192.168.1.6:5000/ChatHub").Build();
 
 			_chat = chat;
+
+			Init();
 		}
 
 		private void Init()
 		{
-			hubConnection = new HubConnectionBuilder().WithUrl("http://192.168.1.6:5000/ChatHub").Build();
+			_hubConnection.On<string, string>("ReceiveMessage", (user, message) => SendMessageChat($"{user}: {message}"));
 
-			hubConnection.On<string, string>("ReceiveMessage", (user, message) => SendMessageChat($"{user}: {message}"));
+			_hubConnection.On<string>("JoinChat", (user) => SendMessageChat($"{user} entrou no chat!"));
 
-			hubConnection.On<string>("JoinChat", (user) => SendMessageChat($"{user} entrou no chat!"));
-
-			hubConnection.On<string>("LeaveChat", (user) => SendMessageChat($"{user} saiu do chat!"));
+			_hubConnection.On<string>("LeaveChat", (user) => SendMessageChat($"{user} saiu do chat!"));
 
 			void SendMessageChat(string msg)
 			{
@@ -62,23 +65,47 @@ namespace Chat.Client.ViewModels
 
 		private async Task SendMessageAsync()
 		{
-			await hubConnection.InvokeAsync("SendMessage", UserName, Message);
-			Message = null;
+			if (_hubConnection.State != HubConnectionState.Connected)
+			{
+				MessageBox.Show("Voce preicsa estar conectado para enviar mensagens");
+				return;
+			}
+
+			if (string.IsNullOrEmpty(Message))
+			{
+				MessageBox.Show("Voce precisa informar a mensagem!");
+				return;
+			}
+
+			await _hubConnection.InvokeAsync("SendMessage", UserName, Message);
+			Message = string.Empty;
 		}
 
 		private async Task DesconnectAsync()
 		{
-			if (hubConnection.State == HubConnectionState.Disconnected)
-			{
-				await hubConnection.InvokeAsync("LeaveChat", UserName);
-				await hubConnection.StopAsync();
-			}
+			if (_hubConnection.State != HubConnectionState.Connected)
+				return;
+
+			await _hubConnection.InvokeAsync("LeaveChat", UserName);
+			await _hubConnection.StopAsync();
 		}
 
 		private async Task ConnectAsync()
 		{
-			await hubConnection.StartAsync();
-			await hubConnection.InvokeAsync("JoinChat", UserName);
+			if (_hubConnection.State != HubConnectionState.Disconnected)
+			{
+				MessageBox.Show("Voce ja está conectado!");
+				return;
+			}
+
+			if (string.IsNullOrEmpty(UserName))
+			{
+				MessageBox.Show("Voce precisa informar seu nome!");
+				return;
+			}
+
+			await _hubConnection.StartAsync();
+			await _hubConnection.InvokeAsync("JoinChat", UserName);
 		}
 	}
 }
